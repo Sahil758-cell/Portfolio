@@ -30,3 +30,5 @@ generated_images/
 .env
 __pycache__/
 *.pyc
+
+# Trigger redeploy
