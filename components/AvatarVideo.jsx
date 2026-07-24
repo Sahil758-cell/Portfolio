@@ -16,6 +16,12 @@ const AvatarVideo = ({ src = "/avatar-intro.mp4", poster = "" }) => {
   useEffect(() => {
     const vid = videoRef.current;
     if (!vid) return;
+    /* Server-rendered <video src> can fail to load before hydration attaches
+       onError, so the error event is missed — check vid.error directly. */
+    if (vid.error || vid.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+      setHasVideo(false);
+      return;
+    }
     vid.muted = true;
     vid.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
   }, []);
