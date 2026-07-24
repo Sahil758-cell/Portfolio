@@ -39,7 +39,7 @@ const Hero = () => {
   }, [text, typing, idx]);
 
   return (
-    <section id="home" className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-20 pb-8">
+    <section id="home" className="relative flex flex-col overflow-hidden pt-28 pb-10">
       <NeuralBackground />
       <div className="orb w-96 h-96 bg-cyan-500/20 -top-32 -left-32 animate-float-slow" />
       <div className="orb w-80 h-80 bg-violet-500/15 bottom-0 -right-20 animate-float" style={{ animationDelay: "2s" }} />
