@@ -47,7 +47,7 @@ const Hero = () => {
       <div className="max-w-6xl mx-auto px-5 md:px-8 relative z-10 w-full">
 
         {/* ── Main two-column layout ── */}
-        <div className="grid md:grid-cols-[1fr_420px] gap-8 lg:gap-12 items-center">
+        <div className="grid md:grid-cols-[1fr_460px] gap-8 lg:gap-12 items-center">
 
           {/* LEFT — Text */}
           <motion.div

@@ -8,7 +8,6 @@ const AvatarVideo = ({ src = "/avatar-intro.mp4", poster = "" }) => {
   const videoRef    = useRef(null);
   const [muted,    setMuted]    = useState(true);
   const [playing,  setPlaying]  = useState(false);
-  const [ended,    setEnded]    = useState(false);
   const [progress, setProgress] = useState(0);
   const [hasVideo, setHasVideo] = useState(true);
 
@@ -36,7 +35,7 @@ const AvatarVideo = ({ src = "/avatar-intro.mp4", poster = "" }) => {
   const togglePlay = () => {
     const vid = videoRef.current;
     if (!vid) return;
-    if (vid.paused) { vid.play(); setPlaying(true); setEnded(false); }
+    if (vid.paused) { vid.play(); setPlaying(true); }
     else            { vid.pause(); setPlaying(false); }
   };
 
@@ -46,15 +45,12 @@ const AvatarVideo = ({ src = "/avatar-intro.mp4", poster = "" }) => {
     setProgress((vid.currentTime / vid.duration) * 100);
   };
 
-  const onEnded = () => { setPlaying(false); setEnded(true); };
-
   const seekTo = (e) => {
     const vid = videoRef.current;
     if (!vid) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const ratio = (e.clientX - rect.left) / rect.width;
     vid.currentTime = ratio * vid.duration;
-    setEnded(false);
   };
 
   const fullscreen = () => videoRef.current?.requestFullscreen?.();
@@ -121,19 +117,18 @@ const AvatarVideo = ({ src = "/avatar-intro.mp4", poster = "" }) => {
             ref={videoRef}
             src={src}
             poster={poster}
-            loop={false}
+            loop
             playsInline
             muted={muted}
             onTimeUpdate={onTimeUpdate}
-            onEnded={onEnded}
             onError={() => setHasVideo(false)}
-            className="w-full block"
-            style={{ maxHeight: "420px", objectFit: "cover" }}
+            className="w-full block aspect-[4/5]"
+            style={{ objectFit: "cover" }}
           />
         ) : (
           /* Placeholder when no video */
-          <div className="w-full flex flex-col items-center justify-center gap-4"
-            style={{ height: "340px", background: "linear-gradient(135deg, #07070f, #0d0d1c)" }}
+          <div className="w-full aspect-[4/5] flex flex-col items-center justify-center gap-4"
+            style={{ background: "linear-gradient(135deg, #07070f, #0d0d1c)" }}
           >
             {/* Avatar silhouette */}
             <div className="relative">
@@ -169,21 +164,6 @@ const AvatarVideo = ({ src = "/avatar-intro.mp4", poster = "" }) => {
                 />
               ))}
             </div>
-          </div>
-        )}
-
-        {/* ── End screen ── */}
-        {ended && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3"
-            style={{ background: "rgba(0,0,0,0.75)" }}
-          >
-            <p className="text-xs uppercase tracking-widest" style={{ color: "var(--primary)" }}>Introduction complete</p>
-            <button onClick={togglePlay}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm"
-              style={{ background: "var(--primary)", color: "#07070f" }}
-            >
-              <Play size={14} /> Replay
-            </button>
           </div>
         )}
 
