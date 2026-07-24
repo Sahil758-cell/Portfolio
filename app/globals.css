@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Dark Theme (default) ─── */
+:root {
+  --bg:         #07070f;
+  --bg-raised:  #0c0c1a;
+  --bg-card:    #101020;
+  --border:     rgba(255,255,255,0.07);
+  --border-hl:  rgba(34,211,238,0.35);
+  --shadow:     0 2px 16px rgba(0,0,0,0.5);
+
+  --primary:    #22d3ee;
+  --primary-bg: rgba(34,211,238,0.08);
+  --secondary:  #a78bfa;
+  --secondary-bg: rgba(167,139,250,0.08);
+  --accent:     #34d399;
+
+  --text-1: #f1f5f9;
+  --text-2: #94a3b8;
+  --text-3: #475569;
+}
+
+/* ─── Light Theme ─── */
+[data-theme="light"] {
+  --bg:         #f4f7fb;
+  --bg-raised:  #eaeff7;
+  --bg-card:    #ffffff;
+  --border:     rgba(0,0,0,0.09);
+  --border-hl:  rgba(8,145,178,0.4);
+  --shadow:     0 2px 12px rgba(0,0,0,0.08);
+
+  --primary:    #0891b2;
+  --primary-bg: rgba(8,145,178,0.08);
+  --secondary:  #7c3aed;
+  --secondary-bg: rgba(124,58,237,0.08);
+  --accent:     #059669;
+
+  --text-1: #0f172a;
+  --text-2: #475569;
+  --text-3: #94a3b8;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
+/* ─── Base ─── */
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    @apply overflow-x-hidden;
+    font-family: var(--font-inter), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  ::selection {
+    background: rgba(34, 211, 238, 0.2);
+    color: var(--text-1);
+  }
+  [data-theme="light"] ::selection {
+    background: rgba(8, 145, 178, 0.2);
+  }
+}
+
+/* ─── Utilities ─── */
+@layer utilities {
+
+  .font-space { font-family: var(--font-space), sans-serif; }
+  .font-mono  { font-family: var(--font-jbmono), monospace; }
+
+  /* Gradient text — adapts to theme via CSS vars */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  }
+
+  /* Section padding — tighter */
+  .section-pad { @apply py-14 md:py-20; }
+
+  /* ─── Card ─── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  }
+  .card:hover {
+    border-color: var(--border-hl);
+  }
+
+  /* Card with left accent */
+  .card-accent {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--primary);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+
+  /* ─── Navbar ─── */
+  .nav-blur {
+    background: rgba(7,7,15,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  [data-theme="light"] .nav-blur {
+    background: rgba(244,247,251,0.9);
+  }
+
+  /* ─── Buttons ─── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200;
+    background: var(--primary);
+    color: #07070f;
+  }
+  .btn-primary:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+  [data-theme="light"] .btn-primary { color: #ffffff; }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200;
+    border: 1px solid var(--border);
+    color: var(--text-1);
+    background: var(--bg-card);
+  }
+  .btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+  }
+
+  /* ─── Tech tag ─── */
+  .tech-tag {
+    @apply text-xs font-medium px-2.5 py-1 rounded-md;
+    background: var(--primary-bg);
+    border: 1px solid rgba(34,211,238,0.15);
+    color: var(--primary);
+  }
+  [data-theme="light"] .tech-tag {
+    border-color: rgba(8,145,178,0.2);
+  }
+
+  /* ─── Section label ─── */
+  .sec-label {
+    @apply text-xs font-mono font-semibold uppercase tracking-widest;
+    color: var(--primary);
+  }
+
+  /* ─── Orb — hidden in light mode ─── */
+  .orb {
+    @apply absolute rounded-full pointer-events-none;
+    filter: blur(70px);
+    opacity: 0.3;
+  }
+  [data-theme="light"] .orb { display: none; }
+
+  /* ─── Float animation ─── */
+  .animate-float      { animation: float 6s ease-in-out infinite; }
+  .animate-float-slow { animation: float 9s ease-in-out infinite; }
+  .animate-spin-slow  { animation: spin 12s linear infinite; }
+}
+
+/* ─── Keyframes ─── */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
