@@ -45,6 +45,8 @@ const AvatarVideo = ({ src = "/avatar-intro.mp4", poster = "" }) => {
     setProgress((vid.currentTime / vid.duration) * 100);
   };
 
+  const onEnded = () => setPlaying(false);
+
   const seekTo = (e) => {
     const vid = videoRef.current;
     if (!vid) return;
@@ -117,10 +119,10 @@ const AvatarVideo = ({ src = "/avatar-intro.mp4", poster = "" }) => {
             ref={videoRef}
             src={src}
             poster={poster}
-            loop
             playsInline
             muted={muted}
             onTimeUpdate={onTimeUpdate}
+            onEnded={onEnded}
             onError={() => setHasVideo(false)}
             className="w-full block aspect-[4/5]"
             style={{ objectFit: "cover" }}
