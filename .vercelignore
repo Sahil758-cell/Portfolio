@@ -1,4 +1,4 @@
-*.mp4
+/*.mp4
 extract_all_links.py
 extracted_links.txt
 links.txt
